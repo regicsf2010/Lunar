@@ -1,7 +1,7 @@
 clear all; clc;
 
 
-rng(10);
+seed = rng;
 
 %% Load previous database
 load 'database/databaseSmall.mat'
@@ -12,10 +12,10 @@ database(bc + 1 : end, 3) = 1; % inserting classes
 clearvars ans undam data;
 
 %% Creating SOM
-dim1 = 80; % horizontal
-dim2 = 50; % vertical
-net = selforgmap([dim1 dim2], 'coverSteps', 500,...
-                 'initNeighbor', 10, 'topologyFcn', 'gridtop',...
+dim1 = 40; % horizontal = columns 80
+dim2 = 25; % vertical = lines 50
+net = selforgmap([dim1 dim2], 'coverSteps', 10,...
+                 'initNeighbor', 7, 'topologyFcn', 'gridtop',...
                  'distanceFcn', 'dist'); disp('SOM created.')
 %net.trainParam.epochs = 500; % coverSpets * 2 (ordering and tuning phase)
 
@@ -56,7 +56,8 @@ neighbors = sparse((net.layers{1}.distances <= 1.5) - eye(net.layers{1}.size));
 figure, surf(u_matrix) 
 figure, contour(u_matrix, 20)
 
-%figure, surf(p_matrix); % figure, contour(p_matrix, 20)
+%figure, surf(p_matrix); 
+%figure, contour(p_matrix, 20)
 %figure, surf(ustar_matrix); % % figure, contour(ustar_matrix, 20)
 % colormap hsv, colorbar
 % Specific positions: 
